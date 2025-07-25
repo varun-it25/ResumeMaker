@@ -1,29 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Sun,
-  Moon,
-  UploadCloudIcon,
-  Share2,
-  Download,
-  Settings,
-  User,
-  LogOut,
-  ChevronRight,
-} from "lucide-react";
+import { Sun, Moon, UploadCloudIcon, Share2, Download, Settings, User, LogOut, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import ProfilePic from "@/assets/images/ProfilePic.png";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 type Theme = "light" | "dark";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const [theme, setTheme] = useState<Theme>(() => {    
     if (typeof window !== "undefined") {
       return (localStorage.getItem("resume-app-theme") as Theme) || "light";
     }
