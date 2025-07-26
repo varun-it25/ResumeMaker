@@ -42,8 +42,6 @@ const EducationForm = () => {
                             <Label htmlFor="pursuing">Pursuing</Label>
                         </div>
                     </RadioGroup>
-                    <div className="flex items-center space-x-4">
-                    </div>
                 </div>
 
                 <div className="space-y-2">
