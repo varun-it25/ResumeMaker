@@ -5,6 +5,7 @@ import EmptyForm from './EmptyForm';
 import ExperienceForm from './ExperienceForm';
 import ProjectsForm from './ProjectsForm';
 import SkillsForm from './SkillsForm';
+import AchievementForm from './AchievementForm';
 
 interface RootState {
   section: {
@@ -19,12 +20,13 @@ const RightPanel = () => {
     'About': <AboutForm />,
     'Education': <EducationForm />,
     'Experience': <ExperienceForm />,
-    'Projects': <ProjectsForm />,
-    'Skills': <SkillsForm />,
+    'Project': <ProjectsForm />,
+    'Skill': <SkillsForm />,
+    'Achievement': <AchievementForm />,
   };
 
   return (
-    <div className="hidden sm:block w-[24rem] border-l pl-8 py-4 mr-4 pr-4 overflow-auto pb-8">
+    <div className="hidden sm:block w-[24rem] pl-8 my-4 mr-4 pr-4 overflow-auto pb-8">
       {sectionComponents[section] || <EmptyForm />}
     </div>
   );

@@ -1,4 +1,4 @@
-import { Code2, GraduationCap, HandPlatter, Layout, User } from "lucide-react";
+import { Code2, GraduationCap, HandPlatter, Layout, Trophy, User } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSection } from "@/redux/slices/section";
 import React, { useCallback } from "react";
@@ -19,8 +19,9 @@ const sections = [
   { label: 'About', icon: <User size={18} className="dark:text-zinc-300 text-zinc-500" /> },
   { label: 'Education', icon: <GraduationCap size={18} className="dark:text-zinc-300 text-zinc-500" /> },
   { label: 'Experience', icon: <HandPlatter size={18} className="dark:text-zinc-300 text-zinc-500" /> },
-  { label: 'Projects', icon: <Layout size={18} className="dark:text-zinc-300 text-zinc-500" /> },
-  { label: 'Skills', icon: <Code2 size={18} className="dark:text-zinc-300 text-zinc-500" /> },
+  { label: 'Project', icon: <Layout size={18} className="dark:text-zinc-300 text-zinc-500" /> },
+  { label: 'Skill', icon: <Code2 size={18} className="dark:text-zinc-300 text-zinc-500" /> },
+  { label: 'Achievement', icon: <Trophy size={18} className="dark:text-zinc-300 text-zinc-500" /> },
 ];
 
 const Card = React.memo(({ label, icon }: CardProps) => {

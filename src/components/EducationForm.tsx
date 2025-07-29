@@ -22,15 +22,15 @@ const EducationForm = () => {
             <h2 className='font-semibold mb-1'>Education Section</h2>
             <p className='text-xs text-zinc-600 dark:text-zinc-400 mb-6 font-medium'>Edit your education section of resume here.</p>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
 
-                <div className="space-y-2 relative">
+                <div className="space-y-3 relative">
                     <p className="text-xs pl-0.5 italic font-medium">College Name</p>
                     <Input placeholder="Enter your college name" type="text" className="pl-10" />
                     <School className="absolute bottom-2.5 left-4 text-accent-foreground" size={15} />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                     <p className="text-xs pl-0.5 italic font-medium">Current Status</p>
                     <RadioGroup defaultValue="completed" className="flex space-x-2">
                         <div className="flex items-center space-x-2">
@@ -44,7 +44,7 @@ const EducationForm = () => {
                     </RadioGroup>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                     <p className="text-xs pl-0.5 italic font-medium">Duration</p>
                     <div className="flex items-center space-x-4">
                         <Popover>
@@ -73,13 +73,13 @@ const EducationForm = () => {
                     </div>
                 </div>
 
-                <div className="space-y-2 relative">
+                <div className="space-y-3 relative">
                     <p className="text-xs pl-0.5 italic font-medium">CGPA</p>
                     <Input placeholder="Enter your CGPA here" type="number" className="pl-10" />
                     <Star className="absolute bottom-2.5 left-4 text-accent-foreground" size={15} />
                 </div>
 
-                <div className="space-y-2 relative">
+                <div className="space-y-3 relative">
                     <p className="text-xs pl-0.5 italic font-medium">Course</p>
                     <Select>
                         <SelectTrigger className="w-full pl-10">
@@ -93,7 +93,7 @@ const EducationForm = () => {
                     <Book className="absolute bottom-2.5 left-4 text-accent-foreground" size={15} />
                 </div>
 
-                <div className="space-y-2 relative">
+                <div className="space-y-3 relative">
                     <p className="text-xs pl-0.5 italic font-medium">Branch</p>
                     <Select>
                         <SelectTrigger className="w-full pl-10">

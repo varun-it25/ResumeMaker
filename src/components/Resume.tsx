@@ -6,7 +6,7 @@ function Paper(){
 
 const Resume = () => {
   return (
-    <div className="flex-1 h-full flex flex-col p-4 space-y-10 items-center overflow-auto">
+    <div className="flex-1 h-full flex flex-col border-r p-4 space-y-10 items-center overflow-auto">
       <Paper />
     </div>
   );

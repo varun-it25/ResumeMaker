@@ -20,11 +20,11 @@ const ExperienceForm = () => {
     
     return (
         <div>
-            <h2 className='font-semibold mb-3'>Experience Section</h2>
+            <h2 className='font-semibold mb-1'>Experience Section</h2>
             <p className='text-xs text-zinc-600 dark:text-zinc-400 mb-6 font-medium'>Edit your experience section of resume here.</p>
 
             <div className="space-y-6">
-                <div className="space-y-2 relative">
+                <div className="space-y-3 relative">
                     <p className="text-xs pl-0.5 italic font-medium">Company</p>
                     <Input placeholder="Enter company name here" type="text" onChange={e => setName(e.target.value)} value={name} className="pl-10" />
                     <Building className="absolute bottom-2.5 left-4 text-accent-foreground" size={15} />
@@ -153,11 +153,11 @@ const ExperienceForm = () => {
                     <div className="relative">
                       <PencilRuler className="absolute bottom-5.5 left-4 text-accent-foreground" size={15} />
                     </div>
-                    <div className="flex items-center space-x-1.5 overflow-auto pb-2">
+                    <div className="flex items-center space-x-1.5 overflow-auto">
                       {/* <div className="text-xs pl-1 italic text-accent font-semibold">No Skills Added</div> */}
                       <div className="border rounded-full px-3 dark:shadow-foreground py-0.5 flex items-center space-x-1.5">
                         <p className="text-[0.7rem]">React</p>
-                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
+                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:text-white hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
                           <X size={8} />
                         </div>
                       </div>

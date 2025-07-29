@@ -116,16 +116,10 @@
   height: 4px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background: var(--accent);
-}
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: var(--foreground);
+  background-color: var(--accent);
 }
 
 /* Handle on hover */
