@@ -1,73 +1,164 @@
+import { useSelector, useDispatch } from "react-redux"
+import { type RootState, updateProjects } from "@/redux/store"
 import { Input } from "@/components/ui/input"
-import { Link, PencilRuler, WholeWord, X } from "lucide-react";
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Plus, Trash2 } from "lucide-react"
 import { useState } from "react"
 
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "./ui/textarea";
-
 const ProjectsForm = () => {
-    const [name, setName] = useState<string>('');
-    
-    return (
-        <div>
-            <h2 className='font-semibold mb-1'>Project Section</h2>
-            <p className='text-xs text-zinc-600 dark:text-zinc-400 mb-6 font-medium'>Edit your projects section of resume here.</p>
+  const dispatch = useDispatch()
+  const projects = useSelector((state: RootState) => state.resume.projects)
+  const [formData, setFormData] = useState(projects)
 
-            <div className="space-y-6">
+  const handleInputChange = (id: string, field: string, value: string | string[]) => {
+    setFormData((prev) => prev.map((project) => (project.id === id ? { ...project, [field]: value } : project)))
+  }
 
-                <div className="space-y-3 relative">
-                    <p className="text-xs pl-0.5 italic font-medium">Project Name</p>
-                    <Input placeholder="Enter project name here" type="text" onChange={e => setName(e.target.value)} value={name} className="pl-10" />
-                    <WholeWord className="absolute bottom-2.5 left-4 text-accent-foreground" size={15} />
-                </div>
+  const addProject = () => {
+    const newProject = {
+      id: Date.now().toString(),
+      name: "",
+      technologies: "",
+      status: "",
+      description: [""],
+    }
+    setFormData((prev) => [...prev, newProject])
+  }
 
-                <div className="space-y-3">
-                    <p className="text-xs pl-0.5 italic font-medium">Technologies Used</p>
-                    <Input placeholder="Enter tech you used" type="text" className="pl-10" />
-                    <div className="relative">
-                      <PencilRuler className="absolute bottom-5.5 left-4 text-accent-foreground" size={15} />
-                    </div>
-                    <div className="flex items-center space-x-1.5 overflow-auto">
-                      {/* <div className="text-xs pl-1 italic text-accent font-semibold">No Skills Added</div> */}
-                      <div className="border rounded-full px-3 dark:shadow-foreground py-0.5 flex items-center space-x-1.5">
-                        <p className="text-[0.7rem]">React</p>
-                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:text-white hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
-                          <X size={8} />
-                        </div>
-                      </div>
+  const removeProject = (id: string) => {
+    setFormData((prev) => prev.filter((project) => project.id !== id))
+  }
 
-                    </div>
-                </div>
-
-                <div className="space-y-3 relative">
-                    <p className="text-xs pl-0.5 italic font-medium">Live URL</p>
-                    <Input placeholder="Enter project url here" type="text" onChange={e => setName(e.target.value)} value={name} className="pl-10" />
-                    <Link className="absolute bottom-2.5 left-4 text-accent-foreground" size={15} />
-                </div>
-
-                <div className="space-y-3">
-                    <p className="text-xs pl-0.5 italic font-medium">Description of project</p>
-                    <RadioGroup defaultValue="relieved" className="flex items-center">
-                        <RadioGroupItem value="relieved" id="relieved" />
-                        <Textarea placeholder="Paragraph 1" className="" />
-                    </RadioGroup>
-                    <RadioGroup defaultValue="relieved" className="flex items-center">
-                        <RadioGroupItem value="relieved" id="relieved" />
-                        <Textarea placeholder="Paragraph 2" className="" />
-                    </RadioGroup>
-                    <RadioGroup defaultValue="relieved" className="flex items-center">
-                        <RadioGroupItem value="relieved" id="relieved" />
-                        <Textarea placeholder="Paragraph 2" className="" />
-                    </RadioGroup>
-                    <RadioGroup defaultValue="relieved" className="flex items-center">
-                        <RadioGroupItem value="relieved" id="relieved" />
-                        <Textarea placeholder="Paragraph 2" className="" />
-                    </RadioGroup>
-                </div>
-
-            </div>
-        </div>
+  const addDescription = (projectId: string) => {
+    setFormData((prev) =>
+      prev.map((project) =>
+        project.id === projectId ? { ...project, description: [...project.description, ""] } : project,
+      ),
     )
+  }
+
+  const removeDescription = (projectId: string, index: number) => {
+    setFormData((prev) =>
+      prev.map((project) =>
+        project.id === projectId
+          ? { ...project, description: project.description.filter((_, i) => i !== index) }
+          : project,
+      ),
+    )
+  }
+
+  const updateDescription = (projectId: string, index: number, value: string) => {
+    setFormData((prev) =>
+      prev.map((project) =>
+        project.id === projectId
+          ? {
+              ...project,
+              description: project.description.map((desc, i) => (i === index ? value : desc)),
+            }
+          : project,
+      ),
+    )
+  }
+
+  const handleSave = () => {
+    dispatch(updateProjects(formData))
+  }
+
+  const handleReset = () => {
+    setFormData(projects)
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold">Projects</h2>
+        <Button onClick={addProject} size="sm">
+          <Plus className="h-4 w-4 mr-2" />
+          Add Project
+        </Button>
+      </div>
+
+      {formData.map((project, index) => (
+        <Card key={project.id}>
+          <CardHeader className="pb-3">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-lg">Project {index + 1}</CardTitle>
+              <Button onClick={() => removeProject(project.id)} variant="ghost" size="sm">
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>Project Name</Label>
+                <Input
+                  value={project.name}
+                  onChange={(e) => handleInputChange(project.id, "name", e.target.value)}
+                  placeholder="Enter project name"
+                />
+              </div>
+              <div>
+                <Label>Status</Label>
+                <Input
+                  value={project.status}
+                  onChange={(e) => handleInputChange(project.id, "status", e.target.value)}
+                  placeholder="e.g., Live, In Progress"
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label>Technologies</Label>
+              <Input
+                value={project.technologies}
+                onChange={(e) => handleInputChange(project.id, "technologies", e.target.value)}
+                placeholder="e.g., React.js, Node.js, MongoDB"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <Label>Description</Label>
+                <Button onClick={() => addDescription(project.id)} variant="outline" size="sm">
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add
+                </Button>
+              </div>
+              <div className="space-y-2">
+                {project.description.map((desc, descIndex) => (
+                  <div key={descIndex} className="flex space-x-2">
+                    <Textarea
+                      value={desc}
+                      onChange={(e) => updateDescription(project.id, descIndex, e.target.value)}
+                      placeholder="Describe your project"
+                      className="flex-1"
+                      rows={2}
+                    />
+                    <Button onClick={() => removeDescription(project.id, descIndex)} variant="ghost" size="sm">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+
+      <div className="flex space-x-2 pt-4">
+        <Button onClick={handleSave} className="flex-1">
+          Save Changes
+        </Button>
+        <Button onClick={handleReset} variant="outline" className="flex-1 bg-transparent">
+          Reset
+        </Button>
+      </div>
+    </div>
+  )
 }
 
-export default ProjectsForm;
+export default ProjectsForm

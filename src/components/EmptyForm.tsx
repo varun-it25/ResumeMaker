@@ -1,16 +1,15 @@
-import { SaveOff } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { FileText } from "lucide-react"
 
 const EmptyForm = () => {
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
-        <p className="font-semibold mb-1">
-          No Section Selected
-        </p>
-        <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-6 font-medium">
-          Please select a section of your resume to begin editing.
-        </p>
-        <SaveOff size={60} className="dark:text-zinc-600 text-zinc-300" aria-hidden="true" />
-    </div>
+    <Card className="h-full flex items-center justify-center">
+      <CardContent className="text-center py-12">
+        <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+        <h3 className="text-lg font-semibold mb-2">Select a Section</h3>
+        <p className="text-muted-foreground">Choose a section from the sidebar to start editing your resume.</p>
+      </CardContent>
+    </Card>
   )
 }
 

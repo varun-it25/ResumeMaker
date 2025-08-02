@@ -1,141 +1,137 @@
-import { Code2, Database, Frame, Languages, X } from "lucide-react";
-
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useSelector, useDispatch } from "react-redux"
+import { type RootState, updateSkills } from "@/redux/store"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Plus, Trash2 } from "lucide-react"
+import { useState } from "react"
 
 const SkillsForm = () => {
-    return (
-        <div>
-            <h2 className='font-semibold mb-1'>Skill Section</h2>
-            <p className='text-xs text-zinc-600 dark:text-zinc-400 mb-6 font-medium'>Edit your skills section of resume here.</p>
+  const dispatch = useDispatch()
+  const skills = useSelector((state: RootState) => state.resume.skills)
+  const [formData, setFormData] = useState(skills)
 
-            <div className="space-y-6">
+  const handleInputChange = (id: string, field: string, value: string | string[]) => {
+    setFormData((prev) => prev.map((skill) => (skill.id === id ? { ...skill, [field]: value } : skill)))
+  }
 
-                <div className="space-y-3">
-                    <p className="text-xs pl-0.5 italic font-medium">Programing Languages</p>
-                    <Select>
-                        <SelectTrigger className="w-full pl-10">
-                            <SelectValue placeholder="Choose languages you know" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="c++">C++</SelectItem>
-                            <SelectItem value="c">C</SelectItem>
-                            <SelectItem value="java">Java</SelectItem>
-                            <SelectItem value="js">JavaScript</SelectItem>
-                            <SelectItem value="py">Python</SelectItem>
-                            <SelectItem value="ts">TypeScript</SelectItem>
-                        </SelectContent>
-                    </Select>
+  const addSkillCategory = () => {
+    const newSkill = {
+      id: Date.now().toString(),
+      category: "",
+      skills: [""],
+    }
+    setFormData((prev) => [...prev, newSkill])
+  }
 
-                    <div className="relative">
-                      <Languages className="absolute bottom-5.5 left-4 text-accent-foreground" size={15} />
-                    </div>
+  const removeSkillCategory = (id: string) => {
+    setFormData((prev) => prev.filter((skill) => skill.id !== id))
+  }
 
-                    <div className="flex items-center space-x-1.5 overflow-auto">
-                      {/* <div className="text-xs pl-1 italic text-accent font-semibold">No Skills Added</div> */}
-                      <div className="border rounded-full px-3 dark:shadow-foreground py-0.5 flex items-center space-x-1.5">
-                        <p className="text-[0.7rem]">C++</p>
-                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:text-white hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
-                          <X size={8} />
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-                <div className="space-y-3">
-                    <p className="text-xs pl-0.5 italic font-medium">Databases</p>
-                    <Select>
-                        <SelectTrigger className="w-full pl-10">
-                            <SelectValue placeholder="Choose databases you know" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="postgres-sql">PostGres SQL</SelectItem>
-                            <SelectItem value="sql">SQL</SelectItem>
-                            <SelectItem value="mongodb">MongoDB</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                    <div className="relative">
-                      <Database className="absolute bottom-5.5 left-4 text-accent-foreground" size={15} />
-                    </div>
-
-                    <div className="flex items-center space-x-1.5 overflow-auto">
-                      {/* <div className="text-xs pl-1 italic text-accent font-semibold">No Skills Added</div> */}
-                      <div className="border rounded-full px-3 dark:shadow-foreground py-0.5 flex items-center space-x-1.5">
-                        <p className="text-[0.7rem]">PostGres</p>
-                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:text-white hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
-                          <X size={8} />
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-                <div className="space-y-3">
-                    <p className="text-xs pl-0.5 italic font-medium">Frameworks</p>
-                    <Select>
-                        <SelectTrigger className="w-full pl-10">
-                            <SelectValue placeholder="Choose frameworks you know" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="react">React</SelectItem>
-                            <SelectItem value="vue">Vue</SelectItem>
-                            <SelectItem value="angular">Angular</SelectItem>
-                            <SelectItem value="node">Node</SelectItem>
-                            <SelectItem value="spring-boot">Spring Boot</SelectItem>
-                            <SelectItem value="django">Django</SelectItem>
-                            <SelectItem value="flask">Flask</SelectItem>
-                            <SelectItem value="fast-api">FastAPI</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                    <div className="relative">
-                      <Frame className="absolute bottom-5.5 left-4 text-accent-foreground" size={15} />
-                    </div>
-
-                    <div className="flex items-center space-x-1.5 overflow-auto">
-                      {/* <div className="text-xs pl-1 italic text-accent font-semibold">No Skills Added</div> */}
-                      <div className="border rounded-full px-3 dark:shadow-foreground py-0.5 flex items-center space-x-1.5">
-                        <p className="text-[0.7rem]">React</p>
-                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:text-white hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
-                          <X size={8} />
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-                <div className="space-y-3">
-                    <p className="text-xs pl-0.5 italic font-medium">Developer Tools</p>
-                    <Select>
-                        <SelectTrigger className="w-full pl-10">
-                            <SelectValue placeholder="Choose dev tools here" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="vscode">VsCode</SelectItem>
-                            <SelectItem value="github">GitHub</SelectItem>
-                            <SelectItem value="figma">Figma</SelectItem>
-                            <SelectItem value="postman">Postman</SelectItem>
-                            <SelectItem value="vercel">Vercel</SelectItem>
-                            <SelectItem value="firebase">FireBase</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                    <div className="relative">
-                      <Code2 className="absolute bottom-5.5 left-4 text-accent-foreground" size={15} />
-                    </div>
-
-                    <div className="flex items-center space-x-1.5 overflow-auto">
-                      {/* <div className="text-xs pl-1 italic text-accent font-semibold">No Skills Added</div> */}
-                      <div className="border rounded-full px-3 dark:shadow-foreground py-0.5 flex items-center space-x-1.5">
-                        <p className="text-[0.7rem]">VsCode</p>
-                        <div className="bg-accent p-0.5 hover:bg-red-600 hover:text-white hover:rotate-90 duration-400 rounded-full cursor-pointer text-foreground">
-                          <X size={8} />
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+  const addSkill = (categoryId: string) => {
+    setFormData((prev) =>
+      prev.map((skill) => (skill.id === categoryId ? { ...skill, skills: [...skill.skills, ""] } : skill)),
     )
+  }
+
+  const removeSkill = (categoryId: string, index: number) => {
+    setFormData((prev) =>
+      prev.map((skill) =>
+        skill.id === categoryId ? { ...skill, skills: skill.skills.filter((_, i) => i !== index) } : skill,
+      ),
+    )
+  }
+
+  const updateSkill = (categoryId: string, index: number, value: string) => {
+    setFormData((prev) =>
+      prev.map((skill) =>
+        skill.id === categoryId
+          ? {
+              ...skill,
+              skills: skill.skills.map((s, i) => (i === index ? value : s)),
+            }
+          : skill,
+      ),
+    )
+  }
+
+  const handleSave = () => {
+    dispatch(updateSkills(formData))
+  }
+
+  const handleReset = () => {
+    setFormData(skills)
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold">Technical Skills</h2>
+        <Button onClick={addSkillCategory} size="sm">
+          <Plus className="h-4 w-4 mr-2" />
+          Add Category
+        </Button>
+      </div>
+
+      {formData.map((skillCategory, index) => (
+        <Card key={skillCategory.id}>
+          <CardHeader className="pb-3">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-lg">Skill Category {index + 1}</CardTitle>
+              <Button onClick={() => removeSkillCategory(skillCategory.id)} variant="ghost" size="sm">
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <Label>Category Name</Label>
+              <Input
+                value={skillCategory.category}
+                onChange={(e) => handleInputChange(skillCategory.id, "category", e.target.value)}
+                placeholder="e.g., Programming Languages"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <Label>Skills</Label>
+                <Button onClick={() => addSkill(skillCategory.id)} variant="outline" size="sm">
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add Skill
+                </Button>
+              </div>
+              <div className="space-y-2">
+                {skillCategory.skills.map((skill, skillIndex) => (
+                  <div key={skillIndex} className="flex space-x-2">
+                    <Input
+                      value={skill}
+                      onChange={(e) => updateSkill(skillCategory.id, skillIndex, e.target.value)}
+                      placeholder="Enter skill"
+                      className="flex-1"
+                    />
+                    <Button onClick={() => removeSkill(skillCategory.id, skillIndex)} variant="ghost" size="sm">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+
+      <div className="flex space-x-2 pt-4">
+        <Button onClick={handleSave} className="flex-1">
+          Save Changes
+        </Button>
+        <Button onClick={handleReset} variant="outline" className="flex-1 bg-transparent">
+          Reset
+        </Button>
+      </div>
+    </div>
+  )
 }
 
-export default SkillsForm;
+export default SkillsForm
